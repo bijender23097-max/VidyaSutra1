@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Vidyasutra Workspace — Find peer mentors, generate learning roadmaps, ask the community, and collaborate on live whiteboards." />
+  <meta name="theme-color" content="#141413" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <title>Vidyasutra — Peer Learning Workspace</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a href="#discover" class="brand" aria-label="Vidyasutra home" data-view-link="discover">
+        <span class="brand-mark"><span></span><span></span><span></span><span></span></span>
+        <span class="brand-copy"><strong>Vidya<span>sutra</span></strong><small>CAMPUS NETWORK</small></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="discover"><span class="nav-icon">⌕</span><span>Find a mentor</span><span class="nav-arrow">↗</span></button>
+        <button class="nav-item" data-view="roadmap"><span class="nav-icon">◎</span><span>Learning roadmaps</span></button>
+        <button class="nav-item" data-view="community"><span class="nav-icon">◉</span><span>Community</span><span class="nav-count" id="communityCount">3</span></button>
+        <button class="nav-item" data-view="requests"><span class="nav-icon">↗</span><span>My requests</span><span class="nav-count" id="requestCount">2</span></button>
+      </nav>
+      <div class="side-label side-label-spaced">YOUR SPACE</div>
+      <nav class="side-nav" aria-label="Personal navigation">
+        <button class="nav-item" data-view="profile"><span class="nav-icon">◌</span><span>My profile</span></button>
+        <button class="nav-item" data-view="session"><span class="nav-icon">▤</span><span>Whiteboard room</span><span class="live-dot"></span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="mini-promo">
+          <div class="promo-spark">✳</div>
+          <strong>Everyone has<br/>something to teach.</strong>
+          <p>Share what you know. Learn what you need.</p>
+          <button data-view="profile" class="promo-link">Complete your profile <span>→</span></button>
+        </div>
+        <button class="sidebar-user" data-view="profile">
+          <span class="avatar avatar-me">AK</span>
+          <span class="user-label"><strong id="sidebarName">Aarav Kumar</strong><small>Student account</small></span>
+          <span class="more-dots">•••</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button>
+        <div class="crumbs"><span>Vidyasutra</span><span class="crumb-slash">/</span><strong id="crumbCurrent">Find a mentor</strong></div>
+        <div class="topbar-actions">
+          <span class="campus-chip"><span class="green-dot"></span> Campus mode</span>
+          <button class="icon-button" id="helpButton" aria-label="Help">?</button>
+          <button class="top-avatar" data-view="profile" aria-label="Open profile">AK</button>
+          <button class="logout-button" id="logoutButton" type="button" aria-label="Log out" title="Log out">↪</button>
+        </div>
+      </header>
+
+      <section class="view active" id="discoverView" data-view-panel="discover">
+        <div class="page-content">
+          <div class="welcome-line">
+            <span class="eyebrow" id="currentDateLabel">CAMPUS WORKSPACE</span>
+            <span class="welcome-dot"></span>
+            <span class="eyebrow muted">VIDYASUTRA · PEER LEARNING</span>
+          </div>
+          <section class="hero">
+            <div class="hero-copy">
+              <div class="hero-badge"><span>✳</span> Knowledge grows when woven together</div>
+              <h1>Learn from peers.<br/><em>Grow with purpose.</em></h1>
+              <p>Find a fellow student who knows what you want to learn — then swap skills, grab a campus coffee, or build a project together.</p>
+              <form id="searchForm" class="search-box">
+                <span class="search-symbol" aria-hidden="true">⌕</span>
+                <input id="skillSearch" type="search" aria-label="Search mentors by skill" placeholder="What do you want to learn? e.g. Git, Python, LLMs" autocomplete="off" />
+                <button type="submit">Find mentor <span>→</span></button>
+              </form>
+              <div class="search-foot"><span>↳</span> Search by skill · Compare skill-specific ratings · Learn your way</div>
+            </div>
+            <div class="hero-art" role="img" aria-label="Vidyasutra community illustration">
+              <div class="hero-art-card">
+                <small>VIDYASUTRA COMMUNITY</small>
+                <strong>Peer-verified mentors across your campus</strong>
+              </div>
+            </div>
+          </section>
+
+          <div class="stats-strip">
+            <div class="stat-item"><span class="stat-icon">✳</span><div><strong>Skill-first ratings</strong><small>Rated per individual skill</small></div></div>
+            <div class="stat-item"><span class="stat-icon">⇄</span><div><strong>Fair exchange</strong><small>Swap skills or offer a thank-you</small></div></div>
+            <div class="stat-item"><span class="stat-icon mint">⌖</span><div><strong>Flexible sessions</strong><small>Campus library or live whiteboard</small></div></div>
+          </div>
+
+          <section class="section-block">
+            <div class="section-heading">
+              <div>
+                <div class="eyebrow">PEER MENTORS</div>
+                <h2>Find your kind of mentor.</h2>
+                <p>Ranked by their rating in the exact skill you search — not just a generic score.</p>
+              </div>
+              <button class="text-button" id="viewAllMentors">Reset filters <span>↗</span></button>
+            </div>
+            <div class="filter-row" id="skillFilters">
+              <button class="filter-chip active" data-skill="All skills">All skills <span>✳</span></button>
+              <button class="filter-chip" data-skill="Git & GitHub">Git &amp; GitHub</button>
+              <button class="filter-chip" data-skill="Ethical Hacking">Ethical hacking</button>
+              <button class="filter-chip" data-skill="Python">Python</button>
+              <button class="filter-chip" data-skill="UI/UX Design">UI/UX design</button>
+              <button class="filter-chip" data-skill="LLMs">LLMs</button>
+            </div>
+            <div class="results-toolbar">
+              <span id="resultsSummary">Showing <strong>6 mentors</strong></span>
+              <label class="sort-label">Sort by
+                <select id="sortSelect">
+                  <option value="rating">Skill rating: high to low</option>
+                  <option value="reviews">Most reviews</option>
+                  <option value="sessions">Teaching sessions</option>
+                </select>
+              </label>
+            </div>
+            <div class="mentor-grid" id="mentorGrid"></div>
+            <div class="empty-state hidden" id="emptyMentors">
+              <div>
+                <h3>No exact match yet</h3>
+                <p>Try a broader skill keyword or reset the filter.</p>
+                <button class="button-primary" id="resetSearch">Show all mentors</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="bottom-banner">
+            <div>
+              <span class="eyebrow">STRUCTURED LEARNING</span>
+              <h3>Big goals. Small, clear steps.</h3>
+              <p>Generate a practical roadmap for any skill — from day-one basics to your first portfolio project.</p>
+            </div>
+            <button class="button-dark" data-view="roadmap">Build my learning path <span>→</span></button>
+          </section>
+
+          <footer class="footer">
+            <span>© 2026 Vidyasutra</span>
+            <span>Woven for curious minds <b>✳</b></span>
+          </footer>
+        </div>
+      </section>
+
+      <section class="view" id="roadmapView" data-view-panel="roadmap">
+        <div class="page-content page-narrow">
+          <div class="page-intro">
+            <div class="eyebrow">PERSONAL LEARNING PATH</div>
+            <h1>Make the big thing <em>feel doable.</em></h1>
+            <p>Choose a skill to get a step-by-step sequence of concepts, mini-projects, and matching campus mentors.</p>
+          </div>
+          <form class="roadmap-search" id="roadmapForm">
+            <span>◎</span>
+            <input id="roadmapSkill" value="LLMs" placeholder="What skill do you want to learn?" />
+            <button class="button-primary" type="submit">Build roadmap <span>→</span></button>
+          </form>
+          <div class="roadmap-meta" id="roadmapMeta"></div>
+          <div id="roadmapResults"></div>
+        </div>
+      </section>
+
+      <section class="view" id="communityView" data-view-panel="community">
+        <div class="page-content page-narrow">
+          <div class="page-intro">
+            <div class="eyebrow">LEARN OUT LOUD</div>
+            <h1>Ask the Vidyasutra community.</h1>
+            <p>Stuck on a bug or project architecture? Share a clear snippet and learn with peers.</p>
+          </div>
+          <form id="postForm" class="composer">
+            <div class="composer-top">
+              <span class="avatar avatar-me">AK</span>
+              <textarea id="postText" rows="3" placeholder="What's confusing you today? Wrap code in triple backticks ```like this``` if needed…" maxlength="1200" required></textarea>
+            </div>
+            <div class="composer-bottom">
+              <span>Be respectful. Never share private credentials or keys.</span>
+              <button class="button-primary" type="submit">Post question <span>↗</span></button>
+            </div>
+          </form>
+          <div class="community-tools">
+            <div class="community-tabs">
+              <button class="community-tab active" data-community-filter="all">All discussions (<span id="postTotal">3</span>)</button>
+              <button class="community-tab" data-community-filter="unanswered">Needs an answer</button>
+            </div>
+            <label class="sort-label">Topic
+              <select id="communityTopic">
+                <option value="all">All topics</option>
+                <option value="Code help">Code help</option>
+                <option value="Career & learning">Career &amp; learning</option>
+                <option value="Project feedback">Project feedback</option>
+              </select>
+            </label>
+          </div>
+          <div id="communityList" class="community-list"></div>
+        </div>
+      </section>
+
+      <section class="view" id="requestsView" data-view-panel="requests">
+        <div class="page-content page-narrow">
+          <div class="page-intro">
+            <div class="eyebrow">SKILL EXCHANGES</div>
+            <h1>Learning starts <em>with a hello.</em></h1>
+            <p>Manage your sent requests, accept incoming peer requests, and rate completed sessions.</p>
+          </div>
+          <div class="request-tabs">
+            <button class="request-tab active" data-request-tab="sent">Sent to mentors (<span id="sentCount">1</span>)</button>
+            <button class="request-tab" data-request-tab="received">Requests to me (<span id="receivedCount">1</span>)</button>
+          </div>
+          <div id="requestList" class="request-list"></div>
+        </div>
+      </section>
+
+      <section class="view" id="profileView" data-view-panel="profile">
+        <div class="page-content page-narrow">
+          <div class="page-intro">
+            <div class="eyebrow">STUDENT PORTFOLIO</div>
+            <h1>Your Vidyasutra profile.</h1>
+          </div>
+          <div class="profile-cover">
+            <div class="profile-hero-row">
+              <div class="profile-avatar" id="profileInitials">AK</div>
+              <div class="profile-hero-text">
+                <div class="profile-name-line">
+                  <h2 id="profileNameDisplay">Aarav Kumar</h2>
+                  <span class="verified-pill">✓ Verified Student</span>
+                </div>
+                <p id="profileBioDisplay">Computer science student · Curious builder</p>
+                <div class="profile-mini-meta">
+                  <span>⌖ Vidyasutra Campus</span>
+                  <span>✳ Active Member</span>
+                </div>
+              </div>
+              <button class="button-light" id="editProfileButton">Edit profile ✎</button>
+            </div>
+          </div>
+
+          <form id="profileForm" class="profile-form hidden">
+            <h3>Update Profile</h3>
+            <div class="field-grid">
+              <label>Display name<input id="profileName" required /></label>
+              <label>One-line bio<input id="profileBio" maxlength="140" /></label>
+              <label>GitHub URL<input id="githubUrl" type="url" placeholder="https://github.com/username" /></label>
+              <label>LinkedIn URL<input id="linkedinUrl" type="url" placeholder="https://linkedin.com/in/username" /></label>
+            </div>
+            <div class="field-grid">
+              <label>Skills I can teach (comma-separated)<input id="teachSkills" /></label>
+              <label>Skills I want to learn (comma-separated)<input id="learnSkills" /></label>
+            </div>
+            <div class="profile-form-actions">
+              <button type="button" class="button-quiet" id="cancelProfile">Cancel</button>
+              <button type="submit" class="button-primary">Save changes ✓</button>
+            </div>
+          </form>
+
+          <div class="profile-columns">
+            <div class="profile-main-col">
+              <section class="panel-card">
+                <div class="panel-heading">
+                  <div><div class="eyebrow">WHAT I SHARE</div><h3>Skills I teach</h3></div>
+                  <span class="count-bubble" id="teachCount">3</span>
+                </div>
+                <div id="ownSkillList"></div>
+              </section>
+              <section class="panel-card">
+                <div class="panel-heading">
+                  <div><div class="eyebrow">NEXT GOALS</div><h3>Skills I want to learn</h3></div>
+                  <span class="count-bubble" id="learnCountDisplay">3</span>
+                </div>
+                <div id="learnSkillList"></div>
+              </section>
+            </div>
+            <div class="profile-side-col">
+              <section class="panel-card">
+                <div class="eyebrow">LEARNING IMPACT</div>
+                <div class="profile-stat"><strong id="sessionsTaught">12</strong><span>Sessions taught</span></div>
+                <div class="profile-stat"><strong id="learnersHelped">9</strong><span>Learners helped</span></div>
+                <div class="profile-stat"><strong id="overallRatingDisplay">4.8★</strong><span>Overall skill average</span></div>
+              </section>
+              <section class="panel-card">
+                <div class="eyebrow">PROOF OF WORK</div>
+                <h3>External Links</h3>
+                <div id="profileLinks"></div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="sessionView" data-view-panel="session">
+        <div class="page-content">
+          <div class="session-topline">
+            <div>
+              <div class="eyebrow">LIVE COLLABORATION</div>
+              <h1>Make ideas <em>visible.</em></h1>
+              <p>Draw diagrams, trace recursion trees, or sketch UI wireframes. Syncs across open browser tabs automatically!</p>
+            </div>
+            <div class="campus-chip"><span class="green-dot"></span> Cross-Tab Sync Active</div>
+          </div>
+          <div class="session-room-bar">
+            <div>
+              <strong>Vidyasutra Study Room · Shared Whiteboards</strong>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="button-quiet" id="undoBoard">↶ Undo stroke</button>
+              <button class="button-quiet" id="clearBoards">Clear boards ↺</button>
+            </div>
+          </div>
+          <div class="whiteboard-grid">
+            <section class="whiteboard-card">
+              <div class="whiteboard-heading">
+                <div class="avatar avatar-me">AK</div>
+                <div><strong>Your Whiteboard</strong></div>
+                <span class="board-live">LIVE</span>
+              </div>
+              <canvas id="boardOne" class="whiteboard"></canvas>
+              <div class="board-tools">
+                <span>✎ Ink:</span>
+                <button class="tool-button active" data-board-color="#141413" style="color:#141413" title="Espresso Ink">●</button>
+                <button class="tool-button" data-board-color="#156B4D" style="color:#156B4D" title="Emerald Green">●</button>
+                <button class="tool-button" data-board-color="#C83E31" style="color:#C83E31" title="Terracotta Red">●</button>
+                <button class="tool-button" id="eraserButton" title="Eraser">⌫</button>
+              </div>
+            </section>
+            <section class="whiteboard-card">
+              <div class="whiteboard-heading">
+                <div class="avatar">P</div>
+                <div><strong>Peer's Mirrored Board</strong></div>
+                <span class="board-live">SYNCED</span>
+              </div>
+              <canvas id="boardTwo" class="whiteboard"></canvas>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Request Modal -->
+  <div class="modal-backdrop hidden" id="requestModal" role="dialog" aria-modal="true" aria-labelledby="requestModalTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <div class="eyebrow">START A VIDYASUTRA EXCHANGE</div>
+          <h2 id="requestModalTitle" style="margin:4px 0 0;">Send a learning request</h2>
+        </div>
+        <button class="close-modal" data-close-modal aria-label="Close">×</button>
+      </div>
+      <form id="requestForm">
+        <input type="hidden" id="requestMentorId" />
+        <div class="chosen-mentor-row" id="chosenMentor"></div>
+        <div class="form-field">
+          <label>Skill to learn *<input id="requestSkill" required /></label>
+        </div>
+        <div class="form-field">
+          <label>How would you like to exchange value? *</label>
+          <div class="offer-options">
+            <label class="offer-option"><input type="radio" name="offerType" value="swap" checked /><span><strong>⇄ Swap a skill</strong></span></label>
+            <label class="offer-option"><input type="radio" name="offerType" value="treat" /><span><strong>☕ Campus treat</strong></span></label>
+            <label class="offer-option"><input type="radio" name="offerType" value="paid" /><span><strong>₹ Paid session</strong></span></label>
+          </div>
+        </div>
+        <div id="swapDetails" class="form-field"><label>Skill you can teach back *<input id="offerSkill" /></label></div>
+        <div id="treatDetails" class="form-field hidden"><label>Thank-you treat idea *<input id="treatText" placeholder="e.g. Cold coffee at campus cafe" /></label></div>
+        <div id="paidDetails" class="field-grid hidden">
+          <label>Amount (₹) *<input id="paidAmount" type="number" min="1" max="50000" placeholder="200" /></label>
+          <label>Duration<select id="paidDuration"><option>30 minutes</option><option selected>60 minutes</option><option>90 minutes</option></select></label>
+        </div>
+        <div class="form-field">
+          <label>Session mode *</label>
+          <div class="mode-toggle">
+            <label><input type="radio" name="learnMode" value="offline" checked /><span>⌖ <strong>Offline campus spot</strong></span></label>
+            <label><input type="radio" name="learnMode" value="online" /><span>▤ <strong>Online Whiteboard Room</strong></span></label>
+          </div>
+        </div>
+        <div id="offlineDetails" class="form-field">
+          <label>Public campus location *<input id="meetupPlace" value="Central Library Reading Hall" /></label>
+          <div class="meetup-quick-picks">
+            <button type="button" data-meetup="Central Library Reading Hall">Library</button>
+            <button type="button" data-meetup="Campus Main Cafeteria">Cafeteria</button>
+            <button type="button" data-meetup="Innovation Lab Common Area">Innovation Lab</button>
+            <button type="button" id="openMapSearch">View on Maps ↗</button>
+          </div>
+        </div>
+        <div id="onlineDetails" class="form-field hidden"></div>
+        <div class="form-field">
+          <label>Message *<textarea id="requestMessage" rows="3" required maxlength="500"></textarea></label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="button-quiet" data-close-modal>Cancel</button>
+          <button class="button-primary" type="submit">Send request <span>↗</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="help-popover hidden" id="helpPopover">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <span class="eyebrow">QUICK GUIDE</span>
+      <button class="close-modal" id="closeHelp" aria-label="Close">×</button>
+    </div>
+    <h3>How Vidyasutra works</h3>
+    <p style="font-size:13px;color:var(--muted);">Search any skill to see mentors ranked by their rating in that specific skill. Send a swap request, collaborate on the live whiteboard, and mark sessions complete to build your campus portfolio.</p>
+  </div>
+
+  <script src="auth-utils.js"></script>
+  <script src="auth-guard.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

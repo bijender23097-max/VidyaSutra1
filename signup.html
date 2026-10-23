@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Create your Vidyasutra student account to share skills and learn from campus peers." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <title>Vidyasutra | Join Campus</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <section class="brand-panel">
+      <div>
+        <a href="index.html" class="brand" aria-label="Vidyasutra home">
+          <span class="brand-mark"><span></span><span></span><span></span><span></span></span>
+          <span class="brand-copy">
+            <strong>Vidya<span>sutra</span></strong>
+            <small>CAMPUS NETWORK</small>
+          </span>
+        </a>
+
+        <p class="tagline">
+          Everyone knows something worth teaching.
+        </p>
+
+        <div class="features">
+          <p><span>✓</span> Build your verified campus teaching portfolio</p>
+          <p><span>✓</span> Earn skill-specific ratings from peers</p>
+          <p><span>✓</span> Access guided learning roadmaps</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="campus-image">
+          <img src="assets/auth-visual.svg" alt="Vidyasutra campus network preview" width="600" height="420" />
+        </div>
+        <p class="slogan">Join hundreds of curious builders on Vidyasutra.</p>
+      </div>
+    </section>
+
+    <section class="form-panel">
+      <div class="top-line">
+        <span>Already have an account?</span>
+        <a href="login.html">Log In</a>
+      </div>
+
+      <div class="login-container">
+        <h1>Create your account</h1>
+        <p class="intro">Set up your Vidyasutra profile in under a minute.</p>
+
+        <div id="signupStatus" class="status-banner hidden" role="status" aria-live="polite"></div>
+
+        <form id="signupForm" novalidate>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="fullName">Full Name *</label>
+              <div class="input-box">
+                <input type="text" id="fullName" name="fullName" placeholder="Aarav Kumar" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Campus Email *</label>
+              <div class="input-box">
+                <input type="email" id="email" name="email" placeholder="aarav@vidyasutra.edu" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="teachSkills">Skills I Can Teach *</label>
+              <div class="input-box">
+                <input type="text" id="teachSkills" name="teachSkills" placeholder="Python, Git & GitHub" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="learnSkills">Skills I Want to Learn *</label>
+              <div class="input-box">
+                <input type="text" id="learnSkills" name="learnSkills" placeholder="LLMs, UI/UX Design" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="password">Password *</label>
+              <div class="input-box">
+                <input type="password" id="password" name="password" placeholder="Min. 6 characters" required minlength="6" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password *</label>
+              <div class="input-box">
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat password" required minlength="6" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-options" style="margin-top:6px;">
+            <label class="remember-me">
+              <input type="checkbox" id="agreeTerms" required checked />
+              I agree to the respectful peer learning guidelines
+            </label>
+          </div>
+
+          <button type="submit" class="primary-btn">Create Vidyasutra Account →</button>
+        </form>
+
+        <p class="terms">
+          Protected by browser-local PBKDF2 hashing. Read our
+          <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="auth-utils.js"></script>
+  <script src="signup.js"></script>
+</body>
+</html>
